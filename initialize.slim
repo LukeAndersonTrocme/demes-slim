@@ -1,6 +1,11 @@
 initialize() {
     if (!exists("JSON_FILE")) {
-        stop("must define JSON_FILE");
+        // Use the environment variable if available, otherwise stop the simulation
+        if (exists("SLIM_JSON_FILE_ENV")) {
+            defineConstant("JSON_FILE", SLIM_JSON_FILE_ENV);
+        } else {
+            stop("must define JSON_FILE or set SLIM_JSON_FILE_ENV environment variable");
+        }
     }
     if (!exists("DRY_RUN")) {
         defineConstant("DRY_RUN", 0);
